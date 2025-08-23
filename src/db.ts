@@ -18,7 +18,8 @@ const sequelize = new Sequelize(
   {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
-    logging: false, // Optional: Disable SQL logging in console
+   logging: env === 'development', // Enable logging only in development
+
   }
 );
 
