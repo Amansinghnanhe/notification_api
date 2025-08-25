@@ -4,45 +4,45 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('notifications', {
       id: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        allowNull: false,
+        type: Sequelize.INTEGER.UNSIGNED
       },
       process: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       event: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       role: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       code: {
-        type: Sequelize.STRING(10),
-        allowNull: true,
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       user_name: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       notification_type: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       action: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       detail_page_link: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       archive_policy: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       is_read: {
@@ -51,12 +51,14 @@ module.exports = {
         defaultValue: false,
       },
       createdAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },

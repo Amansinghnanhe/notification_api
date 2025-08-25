@@ -1,6 +1,7 @@
 import { Umzug, SequelizeStorage } from 'umzug';
 import path from 'path';
-import sequelize from './db'; 
+import { sequelize } from './db'; 
+
 
 
 const umzug = new Umzug({

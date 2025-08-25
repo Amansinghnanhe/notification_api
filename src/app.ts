@@ -1,20 +1,34 @@
 import express from 'express';
 import notificationRoutes from './routes/notifications';
-import sequelize, { testConnection } from './db';
+import db from './models';// Automatically initializes Sequelize + models
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
+// Middleware to parse JSON
 app.use(express.json());
 
+// Register routes
 app.use('/api', notificationRoutes);
 
-testConnection().then(() => {
-  app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-  });
-}).catch((error) => {
-  console.error('Failed to connect to the database. Server not started.', error);
-  process.exit(1); // Exit the process with failure code
-});
+// Start server after DB connection
+const startServer = async () => {
+  try {
+    await db.sequelize.authenticate(); // test DB connection
+    console.log('Database connected successfully.');
+
+    // Optionally sync models
+    await db.sequelize.sync({ alter: true });
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to connect to the database:', error);
+    process.exit(1); // Exit the process if DB connection fails
+  }
+};
+
+startServer();
 
 export default app;
